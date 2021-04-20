@@ -93,7 +93,7 @@ For details you can have a look at the template file.
     <YOUR_LOCAL_REPOSITORY>/etc/sf_credentials_default_sandbox_template.ini
     
 In the configuration file you will find the following:
-    \[salesforce\]
+
     username = <USERNAME>
     password = <PASSWORD>
     security_token = <SECURITY_TOKEN>
