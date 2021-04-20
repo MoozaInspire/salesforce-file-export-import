@@ -129,4 +129,7 @@ Populate **domain** only if you are using custom domain.
  
 ### upload_attachment.py
 ### export_content_version.py
+
+    export_content_version.py -q "SELECT Id FROM Account" -s path/to/your/config/salesforce_myproject_dev_sandbox.ini -o content_version_account_dev
+
 ### upload_content_version.py
