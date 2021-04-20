@@ -55,10 +55,11 @@ Apart from other python libraries scripts use Simple Salesforce (Salesforce REST
     git clone https://github.com/MoozaInspire/salesforce-file-export-import.git
     
 ### For Mac users - you can add the repository to your PATH variable so that you can run it from anywhere
+Please make sure you replace <PATH_TO_BIN_FOLDER_OF_THIS_REPOSITORY>
 
 For **-bash** value run:
     
-    echo 'export SFDC_FILE_MIGRATION_ROOT="$HOME/.pyenv"' >> ~/.bash_profile
+    echo 'export SFDC_FILE_MIGRATION_ROOT="$HOME/<PATH_TO_BIN_FOLDER_OF_THIS_REPOSITORY>"' >> ~/.bash_profile
     echo 'export PATH="$SFDC_FILE_MIGRATION_ROOT/bin:$PATH"' >> ~/.bash_profile
     
     # reinitialize the shell
@@ -66,7 +67,7 @@ For **-bash** value run:
 
 For **-zsh** value run:
 
-    echo 'export SFDC_FILE_MIGRATION_ROOT="$HOME/.pyenv"' >> ~/.zshrc
+    echo 'export SFDC_FILE_MIGRATION_ROOT="$HOME/<PATH_TO_BIN_FOLDER_OF_THIS_REPOSITORY>"' >> ~/.zshrc
     echo 'export PATH="$SFDC_FILE_MIGRATION_ROOT/bin:$PATH"' >> ~/.zshrc
     
     # reinitialize the shell
