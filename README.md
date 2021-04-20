@@ -7,8 +7,8 @@ Salesforce File/Enhanced Notes Data Migration is a bunch of scripts developed in
 ## Prerequisites
 If you are going to use python scripts for the first time on your Mac you might find the following commands useful.
 
-## PyEnv Installation
-### Mac Users
+### PyEnv Installation
+#### Mac Users
 On Mac consider using [brew](https://github.com/rbenv/rbenv) to install [PyEnv](https://github.com/pyenv/pyenv) and PyEnv to install Python 3.8.7.
 
 If you don't have Homebrew on your laptop you can use the following commands to install it:
@@ -41,10 +41,10 @@ For **-zsh** value run:
     echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.zshrc
     echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.zshrc
     
-### Windows Users
+#### Windows Users
 If you're on Windows, consider using @kirankotari's pyenv-win fork. (pyenv does not work on windows outside the Windows Subsystem for Linux)
 
-## Additional Python Libraries
+### Additional Python Libraries
 Apart from other python libraries scripts use Simple Salesforce (Salesforce REST API Python library) and Future (compatibility layer between Python 2 and Python 3) which are not available by default and need to be installed extra. In order to do that you can run:
 
     pip install simple-salesforce
