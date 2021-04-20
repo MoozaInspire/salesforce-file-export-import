@@ -101,4 +101,6 @@ In the configuration file you will find the following:
     connect_to_sandbox = True
     domain =
     
-You will need to replace values with your credentials. If you connect to sandbox make sure connect_to_sandbox is set to **True** or change it to **False** otherwise. This setting affects the login URL. Populate **domain** only if you are using custom domain.
+You will need to replace values with your credentials. If you connect to sandbox make sure connect_to_sandbox is set to **True** or change it to **False** otherwise. This setting affects the login URL.
+
+Populate **domain** only if you are using custom domain.
