@@ -10,7 +10,5 @@ If you don't have Python on your computer we recommend to install it using .. _P
 
 Apart from other python libraries it uses Simple Salesforce (Salesforce REST API Python library) and Future (compatibility layer between Python 2 and Python 3) which are not available by default and need to be installed extra. In order to do that you can run:
 
-code-block:: python
-
     pip install simple-salesforce
     pip install future
