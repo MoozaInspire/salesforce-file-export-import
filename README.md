@@ -80,3 +80,25 @@ For **-zsh** value run:
     
     # reinitialize the shell
     source ~/.zshrc
+
+## Configuration
+
+### Salesforce Credentials
+All scripts require connection to Salesforce.
+
+To be able to easily switch between environments there is a dedicated configuration file for Salesforce credentials. One configuration file represents one SF org.
+
+For details you can have a look at the template file.
+
+    <YOUR_LOCAL_REPOSITORY>/etc/sf_credentials_default_sandbox_template.ini
+    
+In the configuration file you will find the following:
+    [salesforce]
+    username = <USERNAME>
+    password = <PASSWORD>
+    security_token = <SECURITY_TOKEN>
+
+    connect_to_sandbox = True
+    domain =
+    
+You will need to replace values with your credentials. If you connect to sandbox make sure connect_to_sandbox is set to **True** or change it to **False** otherwise. This setting affects the login URL. Populate **domain** only if you are using custom domain.
