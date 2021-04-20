@@ -1,10 +1,10 @@
 *********************************************
-Salesforce File/Enhanced Notes Data Migration
+# Salesforce File/Enhanced Notes Data Migration
 *********************************************
 
 Salesforce File/Enhanced Notes Data Migration is a bunch of scripts developed in Python 3.8.7. Their goal is to help with Salesforce Files and Attachments data migration from one Salesforce org to another.
 
-# Prerequisites
+## Prerequisites
 If you are going to use python scripts for the first time on your Mac you might find the following commands useful.
 
 We are going to use [brew](https://github.com/rbenv/rbenv) to install [PyEnv](https://github.com/pyenv/pyenv) and PyEnv to install Python 3.8.7.
