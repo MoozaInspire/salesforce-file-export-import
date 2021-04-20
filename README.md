@@ -55,7 +55,7 @@ Apart from other python libraries scripts use Simple Salesforce (Salesforce REST
     git clone https://github.com/MoozaInspire/salesforce-file-export-import.git
     
 ### For Mac users - you can add the repository to your PATH variable so that you can run it from anywhere
-Please make sure you replace <PATH_TO_BIN_FOLDER_OF_THIS_REPOSITORY>
+Please make sure you replace <PATH_TO_BIN_FOLDER_OF_THIS_REPOSITORY> before you run these commands
 
 For **-bash** value run:
     
