@@ -70,6 +70,7 @@ For **-bash** value run:
     source ~/.bash_profile
 
 For **-zsh** value run:
+    
     echo 'export SFDC_FILE_MIGRATION_ROOT="$HOME/<PATH_TO_BIN_FOLDER_OF_THIS_REPOSITORY>"' >> ~/.zshrc
     echo 'export PATH="$SFDC_FILE_MIGRATION_ROOT/bin:$PATH"' >> ~/.zshrc
 
