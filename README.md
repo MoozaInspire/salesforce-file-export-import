@@ -49,3 +49,7 @@ Apart from other python libraries scripts use Simple Salesforce (Salesforce REST
 
     pip install simple-salesforce
     pip install future
+    
+## Installation
+
+    git clone 
