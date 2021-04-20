@@ -89,7 +89,7 @@ To be able to easily switch between environments there is a dedicated configurat
 
 For details you can have a look at the template file.
 
-    <YOUR_LOCAL_REPOSITORY>/etc/sf_credentials_default_sandbox_template.ini
+    etc/sf_credentials_default_sandbox_template.ini
     
 In the configuration file you will find the following:
 
