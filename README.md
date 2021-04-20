@@ -52,4 +52,4 @@ Apart from other python libraries scripts use Simple Salesforce (Salesforce REST
     
 ## Installation
 
-    git clone 
+    git clone https://github.com/MoozaInspire/salesforce-file-export-import.git
