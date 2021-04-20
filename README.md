@@ -9,7 +9,7 @@ If you are going to use python scripts for the first time on your Mac you might 
 
 ### PyEnv Installation
 #### Mac Users
-On Mac consider using [brew](https://github.com/rbenv/rbenv) to install [PyEnv](https://github.com/pyenv/pyenv) and PyEnv to install Python 3.8.7.
+On Mac consider using [Homebrew](https://github.com/rbenv/rbenv) to install [PyEnv](https://github.com/pyenv/pyenv) and PyEnv to install Python 3.8.7.
 
 If you don't have Homebrew on your laptop you can use the following commands to install it:
 
