@@ -105,10 +105,10 @@ You will need to replace values with your credentials. If you connect to sandbox
 Populate **domain** only if you are using custom domain.
 
 ## Command Reference
-* [`pyenv commands`](#export_attachment.py)
-* [`pyenv local`](#upload_attachment.py)
-* [`pyenv global`](#export_content_version.py)
-* [`pyenv shell`](#upload_content_version.py)
+* [`export_attachment.py`](#export_attachment.py)
+* [`upload_attachment.py`](#upload_attachment.py)
+* [`export_content_version.py`](#export_content_version.py)
+* [`upload_content_version.py`](#upload_content_version.py)
 
 ### export_attachment.py
 ### upload_attachment.py
