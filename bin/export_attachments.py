@@ -9,12 +9,15 @@ import logging
 import sys
 
 SCRIPT_FOLDER_PATH = os.path.dirname(os.path.realpath(__file__))
-DEFAULT_EXPORT_CONTENT_VERSION_CONFIG = SCRIPT_FOLDER_PATH + '/../etc/export_content_version.ini'
+DEFAULT_EXPORT_ATTACHMENT_CONFIG = SCRIPT_FOLDER_PATH + '/../etc/export_attachment.ini'
 
-def split_into_batches(items, batch_size):
-    full_list = list(items)
-    for i in range(0, len(full_list), batch_size):
-        yield full_list[i:i + batch_size]
+def get_attachment_ids(attachments):
+    attachment_ids = set()
+    if attachments:
+       for attachment in attachments:
+          attachment_ids.add(attachment["Id"])
+
+    return attachment_ids
 
 def get_content_document_ids(content_document_links):
     content_document_ids = set()
@@ -25,9 +28,9 @@ def get_content_document_ids(content_document_links):
     return content_document_ids
 
 def download_file(args):
-    record, output_directory, sf = args
-    filename = os.path.join(output_directory, record['Id'])
-    url = "https://%s%s" % (sf.sf_instance, record["VersionData"])
+    record, output_folder, sf = args
+    filename = os.path.join(output_folder, record['Id'])
+    url = "https://%s%s" % (sf.sf_instance, record["Body"])
 
     logging.debug("Downloading from " + url)
     response = requests.get(url, headers={"Authorization": "OAuth " + sf.session_id,
@@ -35,8 +38,8 @@ def download_file(args):
 
     if response.ok:
         # Save File
-        if not os.path.isdir(output_directory):
-           os.mkdir(output_directory)
+        if not os.path.isdir(output_folder):
+           os.mkdir(output_folder)
 
         with open(filename, "wb") as output_file:
             output_file.write(response.content)
@@ -44,15 +47,35 @@ def download_file(args):
     else:
         return "Couldn't download %s" % url
 
-def fetch_content_versions(sf, query_string, output_file_name, output_directory, valid_content_document_ids=None, batch_size=100):
+'''
+def fetch_attachments(sf, records, output_folder):
+    logging.info("Downloading file {0} out of {1}".format(i, len(batches)))
+    i = 0
+    if records:
+       with concurrent.futures.ProcessPoolExecutor() as executor:
+          args = ((record, output_folder, sf) for record in records)
+          for result in executor.map(download_file, args):
+             logging.debug(result)
+
+       logging.debug('All files downloaded')
+    else:
+       logging.debug("No files to download")
+'''
+
+def split_into_batches(items, batch_size):
+    full_list = list(items)
+    for i in range(0, len(full_list), batch_size):
+        yield full_list[i:i + batch_size]
+
+def fetch_attachments(sf, query_string, output_file_name, output_folder, attachment_ids=None, batch_size=100):
     # Divide the full list of files into batches of 100 ids
-    batches = list(split_into_batches(valid_content_document_ids, batch_size))
+    batches = list(split_into_batches(attachment_ids, batch_size))
 
     i = 0
     for batch in batches:
         i = i + 1
         logging.info("Processing batch {0}/{1}".format(i, len(batches)))
-        batch_query = query_string + ' AND ContentDocumentId in (' + ",".join("'" + item + "'" for item in batch) + ')'
+        batch_query = query_string + ' WHERE Id  in (' + ",".join("'" + item + "'" for item in batch) + ')'
         query_response = sf.query(batch_query)
         records_to_process = get_records_from_response(query_response)
         if records_to_process:
@@ -68,14 +91,13 @@ def fetch_content_versions(sf, query_string, output_file_name, output_directory,
 
            while query_response:
               with concurrent.futures.ProcessPoolExecutor() as executor:
-                 args = ((record, output_directory, sf) for record in query_response["records"])
+                 args = ((record, output_folder, sf) for record in query_response["records"])
                  for result in executor.map(download_file, args):
                     logging.debug(result)
               break
 
         logging.debug('All files in batch {0} downloaded'.format(i))
     logging.debug('All batches complete')
-
 
 def print_as_csv(list_of_dicts, csv_file = sys.stdout, write_header = True):
     writer = csv.DictWriter(csv_file, list_of_dicts[0].keys(), quoting=csv.QUOTE_ALL)
@@ -100,7 +122,7 @@ def main():
     import argparse
     import configparser
 
-    parser = argparse.ArgumentParser(description='Export ContentDocumentLink and ContentVersion (Files) related to parent records (e.g. Account) from Salesforce')
+    parser = argparse.ArgumentParser(description='Export ContentDocumentLink and Attachment (Files) related to parent records (e.g. Account) from Salesforce')
     parser.add_argument('-q', '--query', metavar='query', required=True,
                         help='SOQL to limit the valid ContentDocumentIds. Must return the Ids of parent objects.')
 
@@ -115,10 +137,6 @@ def main():
     parser.add_argument(
         "-c", "--basic-config-file", dest="basic_config_file",
         help="Optional parameter to override default basic configuration of the script", required=False)
-
-    parser.add_argument(
-        "--include-notes", dest="include_notes",
-        help="By default notes are included in the export - set this flag to False if you want to exclude them", required=False)
 
     args = parser.parse_args()
 
@@ -139,57 +157,59 @@ def main():
     else:
        domain = 'login'
 
-    export_content_version_config = configparser.ConfigParser(allow_no_value=True)
+    export_attachment_config = configparser.ConfigParser(allow_no_value=True)
     if args.basic_config_file:
-       export_content_version_config.read(args.basic_config_file)
+       export_attachment_config.read(args.basic_config_file)
     else:
-       export_content_version_config.read(DEFAULT_EXPORT_CONTENT_VERSION_CONFIG)
+       export_attachment_config.read(DEFAULT_EXPORT_ATTACHMENT_CONFIG)
 
-    content_document_link_output_file = os.path.join(args.output_folder, export_content_version_config['export_content_version']['content_document_link_output_file'])
-    content_document_link_query_fields = export_content_version_config['export_content_version']['content_document_link_query_fields']
-    content_version_output_file = os.path.join(args.output_folder, export_content_version_config['export_content_version']['content_version_output_file'])
-    content_version_query_fields = export_content_version_config['export_content_version']['content_version_query_fields']
-
-    batch_size = int(export_content_version_config['export_content_version']['batch_size'])
-    loglevel = logging.getLevelName(export_content_version_config['export_content_version']['loglevel'])
+    attachment_output_file = os.path.join(args.output_folder, export_attachment_config['export_attachment']['attachment_output_file'])
+    attachment_query_fields = export_attachment_config['export_attachment']['attachment_query_fields']
+    batch_size = int(export_attachment_config['export_attachment']['batch_size'])
+    loglevel = logging.getLevelName(export_attachment_config['export_attachment']['loglevel'])
     logging.basicConfig(format='%(asctime)s %(levelname)s %(message)s', level=loglevel)
 
-    content_document_link_query = 'SELECT ' + content_document_link_query_fields + ' ' \
-                             'FROM ContentDocumentLink ' \
-                             'WHERE LinkedEntityId in ({0})'.format(args.query)
-    content_version_output = export_content_version_config['export_content_version']['content_version_output_dir']
-    content_version_query = "SELECT " + content_version_query_fields + " FROM ContentVersion " \
-            "WHERE IsLatest = True"
-    if not args.include_notes:
-       content_version_query = content_version_query + " AND FileExtension != 'snote'"
+    attachment_ids_query = 'SELECT Id ' \
+                             'FROM Attachment ' \
+                             'WHERE ParentId in ({0})'.format(args.query)
+
+    attachment_query = "SELECT " + attachment_query_fields + " FROM Attachment"
+    attachment_output = export_attachment_config['export_attachment']['attachment_output_dir']
 
     # Output
-    logging.info('Export ContentVersion (Files) from Salesforce')
+    logging.info('Export Attachment (Files) from Salesforce')
     logging.info('Username: ' + username)
     logging.info('Signing in at: https://'+ domain + '.salesforce.com')
-    logging.info('Output directory: ' + content_version_output)
+    logging.info('Output directory: ' + attachment_output)
 
     # Connect
     sf = Salesforce(username=username, password=password, security_token=token, domain=domain)
     logging.debug("Connected successfully to {0}".format(sf.sf_instance))
 
     # Get Content Document Ids
-    logging.debug("Querying to get Content Document Ids...")
+    logging.debug("Querying to get attachments IDs...")
     
-    valid_content_document_ids = None
-    if content_document_link_query:
-       content_document_link_response = sf.query_all(content_document_link_query)
-       if(content_document_link_response):
-          content_document_links = get_records_from_response(content_document_link_response)
-          valid_content_document_ids = get_content_document_ids(content_document_links)
+    attachments = None
+    attachment_ids = None
+    if attachment_query:
+       attachments_response = sf.query_all(attachment_ids_query)
+       
+       if(attachments_response):
+          attachments = get_records_from_response(attachments_response)
+          attachment_ids = get_attachment_ids(attachments)
           
-          with open(content_document_link_output_file, 'w') as output_file:
-                  print_as_csv(content_document_links, output_file)
+       '''
+          with open(attachment_output_file, 'w') as output_file:
+             print_as_csv(attachments, output_file)
+       '''
 
-    logging.info("Found {0} total files".format(len(valid_content_document_ids)))
+    if attachments:
+       logging.info("Found {0} total files".format(len(attachments)))
+    else:
+       logging.info("Found {0} total files".format(0))
 
     # Begin Downloads
-    fetch_content_versions(sf=sf, query_string=content_version_query, valid_content_document_ids=valid_content_document_ids, output_file_name=content_version_output_file , output_directory=os.path.join(args.output_folder, content_version_output), batch_size=batch_size)
+    fetch_attachments(sf=sf, query_string = attachment_query, attachment_ids = attachment_ids, output_file_name = attachment_output_file, output_folder = os.path.join(args.output_folder, attachment_output), batch_size = batch_size)
    
 if __name__ == "__main__":
     main()
