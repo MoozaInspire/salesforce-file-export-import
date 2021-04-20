@@ -100,7 +100,10 @@ def main():
     import argparse
     import configparser
 
-    parser = argparse.ArgumentParser(description='Export ContentDocumentLink and ContentVersion (Files) related to parent records (e.g. Account) from Salesforce')
+    parser = argparse.ArgumentParser(description='Export ContentDocumentLink and ContentVersion (Files) related to parent records (e.g. Account) from Salesforce\n' +
+                                                 'Example:\n' +
+                                                 '\t' + os.path.basename(__file__) + ' -q "SELECT Id FROM Account" -s ~/Workspace/salesforce-file-export-import/etc/sf_credentials_myproject_uat.ini -o content_version_account_dev --include-notes True',
+                                                 formatter_class=argparse.RawTextHelpFormatter)
     parser.add_argument('-q', '--query', metavar='query', required=True,
                         help='SOQL to limit the valid ContentDocumentIds. Must return the Ids of parent objects.')
 

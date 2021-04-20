@@ -52,10 +52,6 @@ def main():
         help="Input folder with binary data - file referenced by original attachment ID", required=True)
 
    parser.add_argument(
-        "-r", "--result-file", dest="result_file",
-        help="Result CSV file with ContentVersion info", required=False)
-
-   parser.add_argument(
         "-u", "--user-mapping", dest="user_mapping",
         help="User ID mapping in CSV format", required=True)
 

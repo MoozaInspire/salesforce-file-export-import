@@ -11,7 +11,7 @@ def create_content_version_request_body(content_version, base64_version_data):
 def main():
    parser = argparse.ArgumentParser(description='Script which loads content versions to Salesforce:\n' +
                                                 'Example:\n' +
-                                                '\t' + os.path.basename(__file__),
+                                                '\t' + os.path.basename(__file__) + ' upload_content_versions.py -u Source_Original_Id__c -s ~/Workspace/salesforce-file-export-import/etc/sf_credentials_myproject_dev.ini -i content_version_account_dev/content_version.csv -f content_version_account_dev/ContentVersion',
 						formatter_class=argparse.RawTextHelpFormatter)
 
    parser.add_argument(
@@ -21,10 +21,6 @@ def main():
    parser.add_argument(
         "-f", "--input-folder", dest="input_folder",
         help="Input folder with binary data - file referenced by original content version ID", required=True)
-
-   parser.add_argument(
-        "-r", "--result-file", dest="result_file",
-        help="Result CSV file with ContentVersion info", required=False)
 
    parser.add_argument(
         "-v", "--verbose", dest="verbose", action='store_true',
