@@ -82,10 +82,9 @@ For **-zsh** value run:
     source ~/.zshrc
 
 ## Configuration
+The following configuration is shared by all the scripts. The dedicated configuration will be described in each script section.
 
 ### Salesforce Credentials
-All scripts require connection to Salesforce.
-
 To be able to easily switch between environments there is a dedicated configuration file for Salesforce credentials. One configuration file represents one SF org.
 
 For details you can have a look at the template file.
