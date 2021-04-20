@@ -117,7 +117,7 @@ def main():
         help="Optional parameter to override default basic configuration of the script", required=False)
 
     parser.add_argument(
-        "--include-notes", dest="include_notes",
+        "--include-notes", dest="include_notes", default=False,
         help="By default notes are included in the export - set this flag to False if you want to exclude them", required=False)
 
     args = parser.parse_args()
