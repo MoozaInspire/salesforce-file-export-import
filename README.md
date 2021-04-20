@@ -16,3 +16,8 @@ Apart from other python libraries it uses Simple Salesforce (Salesforce REST API
 
     pip install simple-salesforce
     pip install future
+    
+.. code-block:: python
+
+    from simple_salesforce import Salesforce
+    sf = Salesforce(instance='na1.salesforce.com', session_id='')
