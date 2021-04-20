@@ -3,11 +3,7 @@ import base64, os, csv, argparse, sys, datetime, configparser
 from simple_salesforce import Salesforce
 import logging as log
 from simple_salesforce.exceptions import SalesforceMalformedRequest
-'''
-def create_content_version_request_body(content_version, base64_version_data):
-   content_version_request_body={'Title':content_version['Title'], 'Description':content_version['Description'], 'PathOnClient':content_version['PathOnClient'], 'VersionData':base64_version_data, 'CreatedDate':content_version['CreatedDate'].replace(' ', 'T') + '.000Z', 'LastModifiedDate':content_version['LastModifiedDate'].replace(' ', 'T') + '.000Z', 'ContentUrl':content_version['ContentUrl'], 'ReasonForChange':content_version['ReasonForChange'], 'SharingOption':content_version['SharingOption'], 'SharingPrivacy':content_version['SharingPrivacy'], 'CurrencyIsoCode':content_version['CurrencyIsoCode'], 'Origin':content_version['Origin'], 'ContentLocation':content_version['ContentLocation'], 'ExternalDocumentInfo1':content_version['ExternalDocumentInfo1'], 'ExternalDocumentInfo2':content_version['ExternalDocumentInfo2'], 'IsMajorVersion':content_version['IsMajorVersion'].replace('1', 'true').replace('0', 'false')}
-   return content_version_request_body
-'''
+
 def create_content_version_request_body(content_version, base64_version_data):
    content_version_request_body={'Title':content_version['Title'], 'Description':content_version['Description'], 'PathOnClient':content_version['PathOnClient'], 'VersionData':base64_version_data, 'CreatedDate':content_version['CreatedDate'], 'LastModifiedDate':content_version['LastModifiedDate'], 'ContentUrl':content_version['ContentUrl'], 'ReasonForChange':content_version['ReasonForChange'], 'SharingOption':content_version['SharingOption'], 'SharingPrivacy':content_version['SharingPrivacy'], 'CurrencyIsoCode':content_version['CurrencyIsoCode'], 'Origin':content_version['Origin'], 'ContentLocation':content_version['ContentLocation'], 'ExternalDocumentInfo1':content_version['ExternalDocumentInfo1'], 'ExternalDocumentInfo2':content_version['ExternalDocumentInfo2'], 'IsMajorVersion':content_version['IsMajorVersion'].replace('1', 'true').replace('0', 'false').replace('False', 'false').replace('True', 'true')}
    return content_version_request_body
@@ -37,6 +33,10 @@ def main():
    parser.add_argument(
         "-s", "--salesforce-config-file", dest="salesforce_config_file",
         help="Salesforce config file with login info", required=True)
+
+   parser.add_argument(
+        "-u", "--upsert-key", dest="upsert_key",
+        help="Upsert key", required=True)
 
    args = parser.parse_args()
 
@@ -79,7 +79,7 @@ def main():
                   # set the Content-Disposition header otherwise the limit for the file upload will be 37,5 MB
                   sf.headers['Content-Type'] = 'multipart/form-data; boundary="boundary_string"'
                   try:
-                     result=sf.ContentVersion.upsert('Sinch_Org_Original_ID__c/' + content_version_id, content_version_request_body)
+                     result=sf.ContentVersion.upsert(args.upsert_key + '/' + content_version_id, content_version_request_body)
                   except Exception as ex:
                      error=ex
 
@@ -96,7 +96,6 @@ def main():
                   print(result_row)
             else:
                 print('No file for Id: ', content_version['Id'])
-                #sf.ContentVersion.upsert('Sinch_Org_Original_ID__c/' + content_version['Id'], {'Title':content_version['Title'], 'Description':content_version['Description'], 'PathOnClient':content_version['PathOnClient'], 'VersionData': None, 'ContentUrl': content_version['ContentUrl']})
                 print(result)
 
 if __name__ == "__main__":

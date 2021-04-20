@@ -6,6 +6,7 @@ from simple_salesforce.exceptions import SalesforceMalformedRequest
 
 def create_attachment_request_body(attachment, base64_body, user_mapping, parent_mapping):
    attachment_request_body={'Body': base64_body, 'ContentType': attachment['ContentType'], 'Description': attachment['Description'], 'CreatedDate': attachment['CreatedDate'], 'IsPrivate': attachment['IsPrivate'].replace('False', 'false').replace('True', 'true'), 'LastModifiedDate': attachment['LastModifiedDate'], 'Name': attachment['Name']}
+
    if attachment['ParentId'] not in parent_mapping:
       log.info('Skipping upload of attachment with Id: ' + attachment['Id'] + ' due to missing parent (' + attachment['ParentId']  +')')
       return None
