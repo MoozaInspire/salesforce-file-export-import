@@ -76,7 +76,7 @@ For **-bash** value run:
     echo 'export PATH="$SFDC_FILE_MIGRATION_ROOT/bin:$PATH"' >> ~/.bash_profile
     
     e.g.
-    echo 'export SFDC_FILE_MIGRATION_ROOT="$HOME/Workspace/salesforce-file-export-import/bin"' >> ~/.bash_profile
+    echo 'export SFDC_FILE_MIGRATION_ROOT="$HOME/Workspace/salesforce-file-export-import"' >> ~/.bash_profile
     echo 'export PATH="$SFDC_FILE_MIGRATION_ROOT/bin:$PATH"' >> ~/.bash_profile
     
     # reinitialize the shell
@@ -88,7 +88,7 @@ For **-zsh** value run:
     echo 'export PATH="$SFDC_FILE_MIGRATION_ROOT/bin:$PATH"' >> ~/.zshrc
 
     e.g.
-    echo 'export SFDC_FILE_MIGRATION_ROOT="$HOME/Workspace/salesforce-file-export-import/bin"' >> ~/.zshrc
+    echo 'export SFDC_FILE_MIGRATION_ROOT="$HOME/Workspace/salesforce-file-export-import"' >> ~/.zshrc
     echo 'export PATH="$SFDC_FILE_MIGRATION_ROOT/bin:$PATH"' >> ~/.zshrc
     
     # reinitialize the shell
@@ -124,6 +124,12 @@ Populate **domain** only if you are using custom domain.
 * [`upload_content_version.py`](#upload_content_version.py)
 
 ### export_attachment.py
+
+    export_attachment.py -q "SELECT Id FROM Account" -s path/to/your/config/salesforce_myproject_dev_sandbox.ini -o content_version_account_dev
+ 
 ### upload_attachment.py
 ### export_content_version.py
+
+    export_content_version.py -q "SELECT Id FROM Account" -s path/to/your/config/salesforce_myproject_dev_sandbox.ini -o content_version_account_dev
+
 ### upload_content_version.py
