@@ -62,12 +62,16 @@ For **-bash** value run:
     echo 'export SFDC_FILE_MIGRATION_ROOT="$HOME/<PATH_TO_BIN_FOLDER_OF_THIS_REPOSITORY>"' >> ~/.bash_profile
     echo 'export PATH="$SFDC_FILE_MIGRATION_ROOT/bin:$PATH"' >> ~/.bash_profile
     
+    e.g.
+    echo 'export SFDC_FILE_MIGRATION_ROOT="$HOME/Workspace/salesforce-file-export-import/bin"' >> ~/.bash_profile
+    echo 'export PATH="$SFDC_FILE_MIGRATION_ROOT/bin:$PATH"' >> ~/.bash_profile
+    
     # reinitialize the shell
     source ~/.bash_profile
 
 For **-zsh** value run:
 
-    echo 'export SFDC_FILE_MIGRATION_ROOT="$HOME/<PATH_TO_BIN_FOLDER_OF_THIS_REPOSITORY>"' >> ~/.zshrc
+    echo 'export SFDC_FILE_MIGRATION_ROOT="$HOME/Workspace/salesforce-file-export-import/bin"' >> ~/.zshrc
     echo 'export PATH="$SFDC_FILE_MIGRATION_ROOT/bin:$PATH"' >> ~/.zshrc
     
     # reinitialize the shell
