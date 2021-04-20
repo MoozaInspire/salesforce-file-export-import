@@ -103,3 +103,9 @@ In the configuration file you will find the following:
 You will need to replace values with your credentials. If you connect to sandbox make sure connect_to_sandbox is set to **True** or change it to **False** otherwise. This setting affects the login URL.
 
 Populate **domain** only if you are using custom domain.
+
+## Command Reference
+### export_attachment.py
+### upload_attachment.py
+### export_content_version.py
+### upload_content_version.py
