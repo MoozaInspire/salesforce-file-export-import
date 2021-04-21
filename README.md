@@ -124,10 +124,11 @@ Populate **domain** only if you are using custom domain.
 * [`upload_content_version.py`](#upload_content_version.py)
 
 ### export_attachment.py
-Example:
-	export_content_version.py -q "SELECT Id FROM Account" -s ~/Workspace/salesforce-file-export-import/etc/sf_credentials_myproject_uat.ini -o content_version_account_dev --include-notes True
 
 ```
+Example:
+	export_content_version.py -q "SELECT Id FROM Account" -s ~/Workspace/salesforce-file-export-import/etc/sf_credentials_myproject_uat.ini -o content_version_account_dev --include-notes True
+	
 optional arguments:
   -h, --help            show this help message and exit
   -q query, --query query
