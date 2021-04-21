@@ -124,8 +124,23 @@ Populate **domain** only if you are using custom domain.
 * [`upload_content_version.py`](#upload_content_version.py)
 
 ### export_attachment.py
+Example:
+	export_content_version.py -q "SELECT Id FROM Account" -s ~/Workspace/salesforce-file-export-import/etc/sf_credentials_myproject_uat.ini -o content_version_account_dev --include-notes True
 
-    export_attachment.py -q "SELECT Id FROM Account" -s path/to/your/config/salesforce_myproject_dev_sandbox.ini -o content_version_account_dev
+```
+optional arguments:
+  -h, --help            show this help message and exit
+  -q query, --query query
+                        SOQL to limit the valid ContentDocumentIds. Must return the Ids of parent objects.
+  -o OUTPUT_FOLDER, --output-folder OUTPUT_FOLDER
+                        Output folder
+  -s SALESFORCE_CONFIG_FILE, --salesforce-config-file SALESFORCE_CONFIG_FILE
+                        Salesforce config file with login info
+  -c BASIC_CONFIG_FILE, --basic-config-file BASIC_CONFIG_FILE
+                        Optional parameter to override default basic configuration of the script
+  --include-notes INCLUDE_NOTES
+                        By default notes are included in the export - set this flag to False if you want to exclude them
+```
  
 ### upload_attachment.py
 ### export_content_version.py
