@@ -166,6 +166,26 @@ optional arguments:
 
 ```
 Example:
+	export_content_version.py -q "SELECT Id FROM Account" -s ~/Workspace/salesforce-file-export-import/etc/sf_credentials_myproject_uat.ini -o content_version_account_dev --include-notes True
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -q query, --query query
+                        SOQL to limit the valid ContentDocumentIds. Must return the Ids of parent objects.
+  -o OUTPUT_FOLDER, --output-folder OUTPUT_FOLDER
+                        Output folder
+  -s SALESFORCE_CONFIG_FILE, --salesforce-config-file SALESFORCE_CONFIG_FILE
+                        Salesforce config file with login info
+  -c BASIC_CONFIG_FILE, --basic-config-file BASIC_CONFIG_FILE
+                        Optional parameter to override default basic configuration of the script
+  --include-notes INCLUDE_NOTES
+                        By default notes are included in the export - set this flag to False if you want to exclude them
+```
+
+### upload_content_version.py
+
+```
+Example:
 	upload_content_versions.py upload_content_versions.py -u Source_Original_Id__c -s ~/Workspace/salesforce-file-export-import/etc/sf_credentials_myproject_dev.ini -i content_version_account_dev/content_version.csv -f content_version_account_dev/ContentVersion
 
 optional arguments:
@@ -179,24 +199,4 @@ optional arguments:
                         Salesforce config file with login info
   -u UPSERT_KEY, --upsert-key UPSERT_KEY
                         Upsert key
-```
-
-### upload_content_version.py
-
-```
-Example:
-	export_content_version.py -q "SELECT Id FROM Account" -s ~/Workspace/salesforce-file-export-import/etc/sf_credentials_myproject_uat.ini -o content_version_account_dev --include-notes True
-	
-optional arguments:
-  -h, --help            show this help message and exit
-  -q query, --query query
-                        SOQL to limit the valid ContentDocumentIds. Must return the Ids of parent objects.
-  -o OUTPUT_FOLDER, --output-folder OUTPUT_FOLDER
-                        Output folder
-  -s SALESFORCE_CONFIG_FILE, --salesforce-config-file SALESFORCE_CONFIG_FILE
-                        Salesforce config file with login info
-  -c BASIC_CONFIG_FILE, --basic-config-file BASIC_CONFIG_FILE
-                        Optional parameter to override default basic configuration of the script
-  --include-notes INCLUDE_NOTES
-                        By default notes are included in the export - set this flag to False if you want to exclude them
 ```
