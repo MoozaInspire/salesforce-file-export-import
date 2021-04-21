@@ -126,9 +126,8 @@ Populate **domain** only if you are using custom domain.
 ### export_attachment.py
 
 ```
-Example:
-	export_content_version.py -q "SELECT Id FROM Account" -s ~/Workspace/salesforce-file-export-import/etc/sf_credentials_myproject_uat.ini -o content_version_account_dev --include-notes True
-	
+Export ContentDocumentLink and Attachment (Files) related to parent records (e.g. Account) from Salesforce
+
 optional arguments:
   -h, --help            show this help message and exit
   -q query, --query query
@@ -139,11 +138,29 @@ optional arguments:
                         Salesforce config file with login info
   -c BASIC_CONFIG_FILE, --basic-config-file BASIC_CONFIG_FILE
                         Optional parameter to override default basic configuration of the script
-  --include-notes INCLUDE_NOTES
-                        By default notes are included in the export - set this flag to False if you want to exclude them
 ```
  
 ### upload_attachment.py
+
+```
+Example:
+	upload_attachments.py
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i INPUT_FILE, --input-file INPUT_FILE
+                        Input CSV file with Attachment info
+  -s SALESFORCE_CONFIG_FILE, --salesforce-config-file SALESFORCE_CONFIG_FILE
+                        Salesforce config file with login info
+  -f INPUT_FOLDER, --input-folder INPUT_FOLDER
+                        Input folder with binary data - file referenced by original attachment ID
+  -u USER_MAPPING, --user-mapping USER_MAPPING
+                        User ID mapping in CSV format
+  -p PARENT_MAPPING, --parent-mapping PARENT_MAPPING
+                        Parent ID mapping in CSV format
+  -v, --verbose         Verbose
+```
+
 ### export_content_version.py
 
 ```
@@ -164,3 +181,21 @@ optional arguments:
 ```
 
 ### upload_content_version.py
+
+```
+Example:
+	export_content_version.py -q "SELECT Id FROM Account" -s ~/Workspace/salesforce-file-export-import/etc/sf_credentials_myproject_uat.ini -o content_version_account_dev --include-notes True
+	
+optional arguments:
+  -h, --help            show this help message and exit
+  -q query, --query query
+                        SOQL to limit the valid ContentDocumentIds. Must return the Ids of parent objects.
+  -o OUTPUT_FOLDER, --output-folder OUTPUT_FOLDER
+                        Output folder
+  -s SALESFORCE_CONFIG_FILE, --salesforce-config-file SALESFORCE_CONFIG_FILE
+                        Salesforce config file with login info
+  -c BASIC_CONFIG_FILE, --basic-config-file BASIC_CONFIG_FILE
+                        Optional parameter to override default basic configuration of the script
+  --include-notes INCLUDE_NOTES
+                        By default notes are included in the export - set this flag to False if you want to exclude them
+```
