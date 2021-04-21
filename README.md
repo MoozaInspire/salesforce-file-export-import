@@ -146,6 +146,21 @@ optional arguments:
 ### upload_attachment.py
 ### export_content_version.py
 
-    export_content_version.py -q "SELECT Id FROM Account" -s path/to/your/config/salesforce_myproject_dev_sandbox.ini -o content_version_account_dev
+```
+Example:
+	upload_content_versions.py upload_content_versions.py -u Source_Original_Id__c -s ~/Workspace/salesforce-file-export-import/etc/sf_credentials_myproject_dev.ini -i content_version_account_dev/content_version.csv -f content_version_account_dev/ContentVersion
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i INPUT_FILE, --input-file INPUT_FILE
+                        Input CSV file with ContentVersion info
+  -f INPUT_FOLDER, --input-folder INPUT_FOLDER
+                        Input folder with binary data - file referenced by original content version ID
+  -v, --verbose         Verbose
+  -s SALESFORCE_CONFIG_FILE, --salesforce-config-file SALESFORCE_CONFIG_FILE
+                        Salesforce config file with login info
+  -u UPSERT_KEY, --upsert-key UPSERT_KEY
+                        Upsert key
+```
 
 ### upload_content_version.py
