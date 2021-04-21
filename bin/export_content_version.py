@@ -120,7 +120,7 @@ def main():
         help="Optional parameter to override default basic configuration of the script", required=False)
 
     parser.add_argument(
-        "--include-notes", dest="include_notes", default=False,
+        "--include-notes", dest="include_notes", default=True,
         help="By default notes are included in the export - set this flag to False if you want to exclude them", required=False)
 
     args = parser.parse_args()
@@ -136,11 +136,13 @@ def main():
     password = salesforce_config['salesforce']['password']
     token = salesforce_config['salesforce']['security_token']
     is_sandbox = salesforce_config['salesforce']['connect_to_sandbox']
+    domain = salesforce_config['salesforce']['domain']
 
-    if is_sandbox == 'True':
-       domain = 'test'
-    else:
-       domain = 'login'
+    if not domain:
+       if is_sandbox == 'True':
+          domain = 'test'
+       else:
+          domain = 'login'
 
     export_content_version_config = configparser.ConfigParser(allow_no_value=True)
     if args.basic_config_file:
