@@ -126,8 +126,9 @@ Populate **domain** only if you are using custom domain.
 ### export_attachment.py
 
 ```
-Export ContentDocumentLink and Attachment (Files) related to parent records (e.g. Account) from Salesforce
-
+Example:
+	export_attachments.py
+	
 optional arguments:
   -h, --help            show this help message and exit
   -q query, --query query
